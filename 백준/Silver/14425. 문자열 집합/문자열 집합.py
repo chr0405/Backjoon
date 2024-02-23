@@ -1,17 +1,12 @@
 import sys
 input = sys.stdin.readline
 
-Dictionary = {}
+N, M = map(int, input().split())
+S = set(input() for i in range(N))
+
 Count = 0
-n, m = map(int, input().split())
-
-for _ in range(n):
-    alphabet = input().rstrip()
-    Dictionary[alphabet] = True
-
-for _ in range(m):
-    Word = input().rstrip()
-    if Word in Dictionary:
+for j in range(M):
+    Word = input()
+    if Word in S:
         Count += 1
-
 print(Count)
