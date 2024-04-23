@@ -1,18 +1,15 @@
-import sys
-input = sys.stdin.readline
+N, K = map(int, input().split())
+studentList = [[0] * 6 for _ in range(2)]
+count = 0
 
-N, K = map(int,input().split())
-students = [[0,0] for _ in range(6)] # [여,남] * 6
-res = 0
+for student in range(N):
+    S, Y = map(int, input().split())
+    studentList[S][Y - 1] += 1
 
-for _ in range(N):
-    S, Y = map(int,input().split())
-    students[Y-1][S]+=1
+for sex in studentList:
+    for year in sex:
+        count += year // K
+        if year % K:
+            count += 1
 
-for grade in students:
-    for num in grade:
-        res+=num//K
-        if num % K:
-            res+=1
-    
-print(res)
+print(count)
