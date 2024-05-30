@@ -6,6 +6,8 @@ stack = []
 temp = 1
 result = 0
 
+test = True
+
 for point in range(len(testCase)):
 
   if testCase[point]=='(':
@@ -19,7 +21,7 @@ for point in range(len(testCase)):
   elif testCase[point]==')':
 
     if not stack or stack[-1]!='(':
-      result = 0
+      test = False
       break
 
     if testCase[point-1]=='(':
@@ -30,7 +32,7 @@ for point in range(len(testCase)):
   elif testCase[point]==']':
 
     if not stack or stack[-1]!='[':
-      result = 0
+      test = False
       break
 
     if testCase[point-1]=='[':
@@ -38,7 +40,7 @@ for point in range(len(testCase)):
     temp //= 3
     stack.pop()
 
-if stack:
+if stack or not test:
   print(0)
 else:
   print(result)
