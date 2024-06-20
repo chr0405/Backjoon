@@ -9,7 +9,7 @@ def BFS(start_points):
     queue = deque(start_points)
     
     for r, c in start_points:
-        distances[r][c] = 0  # 시작점의 거리를 0으로 설정
+        distances[r][c] = 0
     
     testX = [1, -1, 0, 0]
     testY = [0, 0, 1, -1]
