@@ -13,9 +13,7 @@ def backtrack(N, M, sequence, used):
             sequence.pop()
             used[i] = False
 
-data = sys.stdin.readline().strip().split()
-N = int(data[0])
-M = int(data[1])
-
+N, M = map(int, sys.stdin.readline().split())
 used = [False] * (N + 1)
+
 backtrack(N, M, [], used)
