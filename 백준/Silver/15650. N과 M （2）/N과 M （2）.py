@@ -1,16 +1,16 @@
 import sys
-input = sys.stdin.readline
 
-def backtrack(N, M, start, sequence):
-    if len(sequence) == M:
-        print(' '.join(map(str, sequence)))
+N, M = map(int, sys.stdin.readline().split())
+array = []
+
+def backTracking(startPorint) :
+    if len(array) == M :
+        print(" ".join(map(str, array)))
         return
+    
+    for i in range(startPorint, N + 1):
+        array.append(i)
+        backTracking(i + 1)
+        array.pop()
 
-    for i in range(start, N + 1):
-        sequence.append(i)
-        backtrack(N, M, i + 1, sequence)
-        sequence.pop()
-
-N, M = map(int, input().strip().split())
-
-backtrack(N, M, 1, [])
+backTracking(1)
