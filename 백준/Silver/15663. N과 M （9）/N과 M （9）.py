@@ -1,20 +1,26 @@
-n, m = map(int, input().split())
-nums = sorted(list(map(int, input().split())))
-visited = [False] * n
-temp = []
+import sys
 
-def dfs():
-    if len(temp) == m:
-        print(*temp)
+N, M = map(int, sys.stdin.readline().split())
+array = list(map(int, sys.stdin.readline().split()))
+array.sort()
+selected = []
+
+used = [False] * N
+
+def backTracking():
+    if len(selected) == M:
+        print(" ".join(map(str, selected)))
         return
-    remember_me = 0
-    for i in range(n):
-        if not visited[i] and remember_me != nums[i]:
-            visited[i] = True
-            temp.append(nums[i])
-            remember_me = nums[i]
-            dfs()
-            visited[i] = False
-            temp.pop()
+    
+    last_used = None
+    
+    for i in range(N):
+        if not used[i] and (array[i] != last_used):
+            used[i] = True
+            selected.append(array[i])
+            last_used = array[i]
+            backTracking()
+            used[i] = False
+            selected.pop()
 
-dfs()
+backTracking()
