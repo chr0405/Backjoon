@@ -4,17 +4,19 @@ N, M = map(int, sys.stdin.readline().split())
 array = list(map(int, sys.stdin.readline().split()))
 array.sort()
 selected = []
-printList = []
 
-def backTracking(start) :
-    if len(selected) == M :
-        if selected not in printList:
-            printList.append(selected[:])
-            print(" ".join(map(str, selected)))
+
+def backTracking(start):
+    if len(selected) == M:
+        print(" ".join(map(str, selected)))
         return
     
+    last_used = None
+    
     for i in range(start, N):
+        if array[i] != last_used :
             selected.append(array[i])
+            last_used = array[i]
             backTracking(i)
             selected.pop()
 
