@@ -1,17 +1,23 @@
-n, m = map(int, input().split())
-nums = sorted(list(map(int, input().split())))
-temp = []
+import sys
 
-def dfs():
-    if len(temp) == m:
-        print(*temp)
+N, M = map(int, sys.stdin.readline().split())
+array = list(map(int, sys.stdin.readline().split()))
+array.sort()
+selected = []
+
+
+def backTracking():
+    if len(selected) == M:
+        print(" ".join(map(str, selected)))
         return
-    remember_me = 0
-    for i in range(n):
-        if remember_me != nums[i]:
-            temp.append(nums[i])
-            remember_me = nums[i]
-            dfs()
-            temp.pop()
+    
+    last_used = None
+    
+    for i in range(N):
+        if array[i] != last_used :
+            selected.append(array[i])
+            last_used = array[i]
+            backTracking()
+            selected.pop()
 
-dfs()
+backTracking()
