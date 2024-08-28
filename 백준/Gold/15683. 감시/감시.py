@@ -19,26 +19,19 @@ direction = {
     5: [[0, 1, 2, 3]]                      # 5번cctv 방향 --> 1가지
 }
 
-# 사무실의 범위를 벗어나는지 체크해주는 함수
-def check(row, col):
-    return row < 0 or row >=N or col < 0 or col >=M
-    
-
-def init():
-    obj = deque() #  cctv의 위치를 저장할 큐 
-    answer = 0
-    for i in range(N):
-        for j in range(M):
-            # 벽이아니고 빈칸이아니면 
-            if space[i][j] != 6 and space[i][j] != 0:
-                obj.append((space[i][j], i, j))   # cctv번호, cctv 좌표 저장
-            # cctv가 아에 없는 경우도 고려해서 빈칸의 갯수로 맞춰둠
-            if space[i][j] == 0:
-                answer += 1
-    return obj, answer
-
 # cctv좌표들(cctv 번호, 행, 렬), 빈칸(0)의 개수 초기화
-cctv, answer = init()
+# 0의 개수 초기화
+cctv = deque()
+answer = 0
+
+for i in range(N):
+    for j in range(M):
+        # 벽이 아니고 빈칸이 아니면
+        if space[i][j] != 6 and space[i][j] != 0:
+            cctv.append((space[i][j], i, j))  # cctv 번호, cctv 좌표 저장
+        # cctv가 없는 경우 빈칸의 갯수를 센다
+        if space[i][j] == 0:
+            answer += 1
 
 
 def move(y, x, direc, space_copy): # 해당 cctv의 행, 렬, 해당 cctv의 감시해야 하는 방향 (for문을 돌며 하나씩), 현재 사무실의 상태
@@ -62,21 +55,17 @@ def move(y, x, direc, space_copy): # 해당 cctv의 행, 렬, 해당 cctv의 감
             space_copy[ny][nx] = '#'
 
 
-# 사각지대를 구하는 함수        
-def zero_cnt(space_copy):
-    global answer
-    cnt = 0
-    for i in space_copy:
-        cnt += i.count(0) # 빈 공간의 개수를 센다
-    answer = min(answer, cnt) # 처음 센 빈 공간의 개수를 시작으로 최솟값을 비교하며 값을 구함
-    
-
 def dfs(level, space):
     space_copy = [[j for j in space[i]] for i in range(N)]
     # level이 커지기 전 (깊이가 커지기 전) 상태의 배열을 저장함
    
     if level == len(cctv): # 모든 cctv를 확인했다면
-        zero_cnt(space_copy)
+        # 사각지대를 구한다
+        global answer
+        cnt = 0
+        for i in space_copy:
+            cnt += i.count(0) # 빈 공간의 개수를 센다
+        answer = min(answer, cnt) # 처음 센 빈 공간의 개수를 시작으로 최솟값을 비교하며 값을 구함
         return			# 전 상태로 돌아감
     
     number, y, x  = cctv[level] # cctv좌표들(cctv 번호, 행, 렬)
