@@ -1,8 +1,10 @@
-N = int(input())
+import sys
+
+N = int(sys.stdin.readline().strip())
 N_list = []
 
 for _ in range(N):
-    i = int(input())
+    i = int(sys.stdin.readline().strip())
     N_list.append(i)
 
 N_list.sort()
