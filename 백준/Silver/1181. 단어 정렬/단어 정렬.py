@@ -1,11 +1,17 @@
 import sys
-n = int(sys.stdin.readline())
-word = []
-for i in range(n):
-    word.append(sys.stdin.readline().strip())
 
-word = list(set(word))
-word.sort()
-word.sort(key=len)
-for i in word:
-    print(i)
+N = int(sys.stdin.readline().strip())
+alphaDict = {}
+
+for _ in range(N):
+  word = sys.stdin.readline().strip()
+  alphaDict[word] = len(word)
+
+def sortFunc(word) :
+  wordKey, wordLen = word
+  return wordLen, wordKey
+
+alphaDict = sorted(alphaDict.items(), key = sortFunc)
+
+for wordKey, wordLen in alphaDict:
+  print(wordKey)
