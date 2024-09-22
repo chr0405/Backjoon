@@ -1,17 +1,16 @@
 import sys
+input = sys.stdin.readline
 
-n = int(sys.stdin.readline())
-temp = dict()
+n = int(input().strip()) 
+logs = {}
 
 for _ in range(n):
-    a, b = map(str, sys.stdin.readline().split())
+    name, status = input().split()
 
-    if b == "enter":
-        temp[a] = b
+    if status == "enter":
+        logs[name] = True 
     else:
-        del temp[a]
+        logs.pop(name)
 
-temp = sorted(temp.keys(), reverse=True)
-
-for i in temp:
-    print(i)
+for name in sorted(logs.keys(), reverse=True):
+    print(name)
