@@ -1,13 +1,14 @@
 import sys
+input = sys.stdin.readline
 
-N = int(sys.stdin.readline().strip())
-numbers = []
+N = int(input().strip())
+members = []
 
 for _ in range(N):
-    old, name = sys.stdin.readline().split()
-    numbers.append([int(old), name])
+    old, name = input().split()
+    members.append((int(old), name))
 
-numbers.sort(key=lambda x : x[0])
+members.sort(key=lambda x: x[0])
 
-for i in range(N):
-    print(numbers[i][0], numbers[i][1], sep=" ")
+for member in members:
+    print(member[0], member[1])
