@@ -1,19 +1,16 @@
 import sys
 input = sys.stdin.readline
 
-N = int(input().strip())
+N = int(input().strip())  # 도시의 수
+array1 = list(map(int, input().split()))  # 도시 간 거리
+array2 = list(map(int, input().split()))  # 리터당 가격
 
-array1 = list(map(int, input().split()))
-array2 = list(map(int, input().split()))
-
-minValue = min(array2[:-1])
 totalValue = 0
+minPrice = array2[0] 
 
 for index in range(N-1):
-    if array2[index] == minValue:
-        totalValue += minValue * sum(array1[index:])
-        break
-    else:
-        totalValue += array1[index] * array2[index]
-    
+    if array2[index] < minPrice:
+        minPrice = array2[index]
+    totalValue += minPrice * array1[index]
+
 print(totalValue)
