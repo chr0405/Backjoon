@@ -1,36 +1,52 @@
 import sys
-sys.setrecursionlimit(10000)
+from collections import deque
 
-def dfs(x, y):
-    # 이동할 네 방향 정의 (상, 하, 좌, 우)
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-    
-    # 방문 처리
-    visited[x][y] = True
-    
-    # 네 방향에 대해 탐색
-    for dx, dy in directions:
-        nx, ny = x + dx, y + dy
-        if 0 <= nx < n and 0 <= ny < m:
-            if not visited[nx][ny] and field[nx][ny] == 1:
-                dfs(nx, ny)
+input = sys.stdin.readline
 
-t = int(input())
+# 상하좌우
+offsetY = [1, -1, 0, 0]
+offsetX = [0, 0, -1, 1]
 
-for _ in range(t):
-    m, n, k = map(int, input().split())
-    field = [[0] * m for _ in range(n)]
-    visited = [[False] * m for _ in range(n)]
+def BFS(y, x):
+    global NxM_matrix
+    global visited_matrix
+
+    queue = deque([])
+
+    queue.append((y, x))
+
+    while queue:
+        # BFS의 경우 선입선출로 방문
+        nowY, nowX = queue.popleft()
+        visited_matrix[nowY][nowX] = True
+
+        for offsetIndex in range(4):
+            testY = nowY + offsetY[offsetIndex]
+            testX = nowX + offsetX[offsetIndex]
+            
+            # 메트릭스 범위 안에 있으며, 배추의 위치 중 방문하지 않은 배추 위치에 한하여
+            if 0 <= testY < N and 0 <= testX < M and NxM_matrix[testY][testX] == 1 and not visited_matrix[testY][testX]:
+                visited_matrix[testY][testX] = True
+                queue.append((testY, testX))
+        
+    return 1
+
+testCase = int(input().strip())
+
+for tc in range(testCase):
+    # 가로 길이(열의 갯수), 세로 길이(행의 갯수), 배추가 심어져 있는 위치의 개수
+    M, N, K = map(int, input().split())
+    NxM_matrix = list([0] * M for _ in range(N))
+    visited_matrix = list([False] * M for _ in range(N))
+    answer = 0
+
+    for _ in range(K):
+        X, Y = map(int, input().split())
+        NxM_matrix[Y][X] = 1
     
-    for _ in range(k):
-        x, y = map(int, input().split())
-        field[y][x] = 1
+    for y in range(N):
+        for x in range(M):
+            if NxM_matrix[y][x] == 1 and visited_matrix[y][x] == False:
+                answer += BFS(y, x)
     
-    count = 0
-    for i in range(n):
-        for j in range(m):
-            if field[i][j] == 1 and not visited[i][j]:
-                dfs(i, j)
-                count += 1
-    
-    print(count)
+    print(answer)
