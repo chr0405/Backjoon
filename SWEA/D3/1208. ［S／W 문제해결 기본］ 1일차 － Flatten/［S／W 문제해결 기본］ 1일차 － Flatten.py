@@ -1,15 +1,24 @@
-for i in range(1, 11):
-    dump = int(input().strip())
+
+for tc in range(1, 11):
+    answer = 0
+    dumpCount = int(input().strip())
     boxList = list(map(int, input().split()))
-    
-    while dump > 0:
-        boxList.sort()  
+    complete = False
+
+    for _ in range(dumpCount):
+        boxList.sort()
+
         if boxList[-1] - boxList[0] <= 1:
+            complete = True
             break
-        boxList[-1] -= 1
-        boxList[0] += 1
-        dump -= 1
-        
-    boxList.sort() 
-    answer = boxList[-1] - boxList[0]
-    print(f'#{i} {answer}')
+        else:
+            boxList[-1] -= 1
+            boxList[0] += 1
+
+    if complete:
+        answer = 1
+    else:
+        boxList.sort()
+        answer = boxList[-1] - boxList[0]
+
+    print(f'#{tc} {answer}')
